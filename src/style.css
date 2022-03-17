@@ -39,7 +39,8 @@ body {
 #sidebar {
     background-color: rgb(240, 240, 240);
     padding: 24px;
-    font-weight: 600;
+    font-weight: 500;
+    border-right: 1px solid rgb(184, 184, 184);
 }
 
 #sidebar img {
@@ -61,15 +62,45 @@ body {
 
 #main {
     background-color: white;
-    padding: 36px 24px;
+    padding: 55px 100px 30px 55px;
 }
 
 .title {
     font-weight: bold;
     font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
 .todo {
     border-bottom: 1px solid whitesmoke;
     padding: 8px 0px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+.project-label {
+    font-size: 0.85rem;
+    color: rgb(80, 80, 80);
+}
+
+.priority-normal,
+.priority-med,
+.priority-high {
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+}
+
+.priority-normal {
+    background-color: rgb(190, 190, 190);
+}
+
+.priority-med {
+    background-color: orange;
+}
+
+.priority-high {
+    background-color: red;
 }
