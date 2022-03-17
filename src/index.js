@@ -28,42 +28,5 @@ const app = (() => {
     const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "03/20/22", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
-    // Render DOM
-    const main = document.querySelector("#main");
-
-    todos.forEach(todo => {
-        const todoContainer = document.createElement("div");
-        todoContainer.classList.add("todo");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-            // Add checkbox ID
-        todoContainer.appendChild(checkbox);
-
-        const todoTitle = document.createElement("span");
-        todoTitle.textContent = todo.title;
-        todoContainer.appendChild(todoTitle);
-
-        const dueDate = document.createElement("span");
-        dueDate.classList.add("due-date");
-        dueDate.textContent = todo.dueDate;
-        todoContainer.appendChild(dueDate);
-
-        const projectLabel = document.createElement("span");
-        projectLabel.classList.add("project-label");
-        projectLabel.textContent = todo.project;
-        todoContainer.appendChild(projectLabel);
-
-        const priority = document.createElement("span");
-        if (todo.priority === "normal") {
-            priority.classList.add("priority-normal");
-        } else if (todo.priority === "medium") {
-            priority.classList.add("priority-med");
-        } else if (todo.priority === "high") {
-            priority.classList.add("priority-high");
-        }
-        todoContainer.appendChild(priority);
-
-        main.appendChild(todoContainer);
-    });
+    events.emit("todos changed", todos);
 })();
