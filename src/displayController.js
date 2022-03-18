@@ -43,6 +43,22 @@ const displayController = (() => {
         })
     }
 
+    // add-todo button
+    const addTodoButton = document.querySelector("#add-todo");
+    addTodoButton.addEventListener("click", displayAddTodo);
+
+    function displayAddTodo() {
+        const addTodoPopup = document.createElement("div");
+        addTodoPopup.id = "add-todo-popup";
+
+        const addTodoOverlay = document.createElement("div");
+        addTodoOverlay.id = "add-todo-overlay";
+
+        const body = document.querySelector("body");
+        body.appendChild(addTodoPopup);
+        body.appendChild(addTodoOverlay);
+    }
+
 })();
 
 export default displayController;
