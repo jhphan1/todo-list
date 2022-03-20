@@ -146,6 +146,11 @@ const displayController = (() => {
         cancel.textContent = "Cancel";
         buttonContainer.appendChild(cancel);
 
+        cancel.addEventListener("click", () => {
+            body.removeChild(addTodoPopup)
+            body.removeChild(addTodoOverlay)
+        });
+
         // Create transparent overlay behind popup
         const addTodoOverlay = document.createElement("div");
         addTodoOverlay.id = "add-todo-overlay";
