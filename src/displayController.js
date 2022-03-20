@@ -58,22 +58,16 @@ const displayController = (() => {
         header.textContent = "New Task"
         addTodoPopup.appendChild(header);
 
+        const content = document.createElement("div");
+        content.id = "add-todo-content";
+        addTodoPopup.appendChild(content);
+
         const title = document.createElement("input");
         title.id = "add-todo-title";
         title.placeholder = "Add title";
         title.maxlength = "30";
         title.required = true;
-        addTodoPopup.appendChild(title);
-
-        const dateLabel = document.createElement("label");
-        dateLabel.for = "add-todo-date";
-        dateLabel.textContent = "Due date: ";
-        addTodoPopup.appendChild(dateLabel);
-
-        const date = document.createElement("input");
-        date.type = "date";
-        date.id = "add-todo-date";
-        addTodoPopup.appendChild(date);
+        content.appendChild(title);
 
         const description = document.createElement("textarea");
         description.id = "add-todo-description";
@@ -81,12 +75,22 @@ const displayController = (() => {
         description.maxlength = "150";
         description.cols = "50";
         description.rows = "4";
-        addTodoPopup.appendChild(description);
+        content.appendChild(description);
+
+        const dateLabel = document.createElement("label");
+        dateLabel.for = "add-todo-date";
+        dateLabel.textContent = "Due date: ";
+        content.appendChild(dateLabel);
+
+        const date = document.createElement("input");
+        date.type = "date";
+        date.id = "add-todo-date";
+        content.appendChild(date);
 
         const projectLabel = document.createElement("label");
         projectLabel.for = "add-todo-project";
         projectLabel.textContent = "Add to project: ";
-        addTodoPopup.appendChild(projectLabel);
+        content.appendChild(projectLabel);
 
         const project = document.createElement("select");
         project.id = "add-todo-project";
@@ -101,12 +105,12 @@ const displayController = (() => {
         project2.textContent = "Work";
         project.appendChild(project2);
 
-        addTodoPopup.appendChild(project);
+        content.appendChild(project);
 
         const priorityLabel = document.createElement("label");
         priorityLabel.for = "add-todo-priority";
         priorityLabel.textContent = "Add priority level: ";
-        addTodoPopup.appendChild(priorityLabel);
+        content.appendChild(priorityLabel);
 
         const priority = document.createElement("select");
         priority.id = "add-todo-priority";
@@ -126,12 +130,21 @@ const displayController = (() => {
         priority3.textContent = "High";
         priority.appendChild(priority3);
 
-        addTodoPopup.appendChild(priority);
+        content.appendChild(priority);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.id = "add-todo-button-container";
+        content.appendChild(buttonContainer);
 
         const save = document.createElement("button");
         save.id = "add-todo-save";
         save.textContent = "Save";
-        addTodoPopup.appendChild(save);
+        buttonContainer.appendChild(save);
+
+        const cancel = document.createElement("button");
+        cancel.id = "add-todo-cancel";
+        cancel.textContent = "Cancel";
+        buttonContainer.appendChild(cancel);
 
         // Create transparent overlay behind popup
         const addTodoOverlay = document.createElement("div");
