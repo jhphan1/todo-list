@@ -1,6 +1,6 @@
 import './style.css';
 import events from "./pubsub";
-import { renderAllTasks, addTodoPopup } from './displayController';
+import { renderAllTasks, renderProjectList, addTodoPopup } from './displayController';
 
 // INDEX.JS - application logic
 //     --Todos array
@@ -32,9 +32,7 @@ const app = (() => {
     events.emit("todos changed", todos);
 
     // Pre-fill projects array
-    projects[0] = "Workout";
-    projects[1] = "Job 1";
-    projects[2] = "Job 2";
+    projects[0] = "Personal";
 
     events.emit("Projects changed", projects);
 

@@ -57,6 +57,30 @@ const renderAllTasks = (() => {
     }
 })();
 
+const renderProjectList = (() => {
+    const projectContainer = document.querySelector("#project-container");
+
+    events.on("Projects changed", render)
+
+    function render(projects) {
+        projects.forEach(project => {
+            const submenu = document.createElement("div");
+            submenu.classList.add("submenu");
+            
+            const icon = document.createElement("img");
+            icon.src = "../src/img/project-item.png";
+            icon.alt = "project-item";
+            submenu.appendChild(icon);
+
+            const title = document.createElement("span");
+            title.textContent = project;
+            submenu.appendChild(title);
+
+            projectContainer.appendChild(submenu);
+        })
+    }
+})();
+
 const addTodoPopup = (() => {
     // add-todo button
     const addTodoButton = document.querySelector("#add-todo-button");
@@ -189,4 +213,4 @@ const addTodoPopup = (() => {
 
 })();
 
-export { renderAllTasks, addTodoPopup };
+export { renderAllTasks, renderProjectList, addTodoPopup };
