@@ -16,6 +16,7 @@ import displayController from './displayController';
 
 const app = (() => {
     let todos = [];
+    let projects = [];
 
     // todo factory function
     function todoFactory(title, description, dueDate, project, priority) {
@@ -23,12 +24,19 @@ const app = (() => {
     }
 
     // Pre-fill todos array
-    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "03/17/22", "Personal", "medium");
-    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "03/17/22", "Personal", "normal");
-    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "03/20/22", "Work", "high");
+    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "2022-03-15", "Personal", "medium");
+    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "2022-03-15", "Personal", "normal");
+    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "2022-03-15", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
     events.emit("todos changed", todos);
+
+    // Pre-fill projects array
+    projects[0] = "Workout";
+    projects[1] = "Job 1";
+    projects[2] = "Job 2";
+
+    events.emit("Projects changed", projects);
 
     // Subscribe to when a user adds new todo using popup
     events.on("User inputs new todo", addTodo);
@@ -73,4 +81,8 @@ const app = (() => {
         todos.push(aTodo);
         events.emit("todos changed", todos);
     }
+
+    return { projects };
 })();
+
+export default app;

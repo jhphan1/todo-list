@@ -1,4 +1,5 @@
 import events from "./pubsub";
+import app from "./index";
 
 const displayController = (() => {
     events.on("todos changed", renderAllTasks);
@@ -6,6 +7,18 @@ const displayController = (() => {
     function renderAllTasks(todos) {
         const main = document.querySelector("#main");
 
+        // Remove current todo elements
+        while (main.childNodes.length > 1) {
+            main.removeChild(main.lastChild);
+        }
+
+        // Render title
+        const title = document.createElement("div");
+        title.classList.add("title");
+        title.textContent = "All Tasks";
+        main.appendChild(title);
+
+        // Render new todos list
         todos.forEach(todo => {
             const todoContainer = document.createElement("div");
             todoContainer.classList.add("todo");
@@ -94,21 +107,18 @@ const displayController = (() => {
         projectLabel.textContent = "Add to project: ";
         content.appendChild(projectLabel);
 
-        const project = document.createElement("select");
-        project.id = "add-todo-project";
-        project.required = true;
+        const projectSelect = document.createElement("select");
+        projectSelect.id = "add-todo-project";
+        projectSelect.required = true;
 
-        const project1 = document.createElement("option");
-        project1.value = "personal";
-        project1.textContent = "Personal";
-        project.appendChild(project1);
+        app.projects.forEach(project => {
+            let option = document.createElement("option");
+            option.value = project;
+            option.textContent = project;
+            projectSelect.appendChild(option);
+        });
 
-        const project2 = document.createElement("option");
-        project2.value = "work";
-        project2.textContent = "Work";
-        project.appendChild(project2);
-
-        content.appendChild(project);
+        content.appendChild(projectSelect);
 
         const priorityLabel = document.createElement("label");
         priorityLabel.for = "add-todo-priority";
@@ -147,7 +157,7 @@ const displayController = (() => {
 
         // Publish "Add new todo" event
         save.addEventListener("click", () => {
-            events.emit("User inputs new todo", [title.value, description.value, date.value, project.options[project.selectedIndex].value, priority.options[priority.selectedIndex].value]);
+            events.emit("User inputs new todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value]);
         })
 
         // If new todo successfully added, close popup
