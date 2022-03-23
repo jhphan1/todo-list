@@ -205,12 +205,76 @@ const addTodoPopup = (() => {
 
         // Create transparent overlay behind popup
         const addTodoOverlay = document.createElement("div");
-        addTodoOverlay.id = "add-todo-overlay";
+        addTodoOverlay.id = "overlay";
 
         body.appendChild(addTodoPopup);
         body.appendChild(addTodoOverlay);
     }
+})();
 
+const addProjectPopup = (() => {
+    const addProjectButton = document.querySelector("#add-project-button");
+    addProjectButton.addEventListener("click", displayAddProject);
+
+    function displayAddProject() {
+        // Generate Add Todo Popup. Anchor to sidebar.
+        const sidebar = document.querySelector("#sidebar");
+
+        const addProjectPopup = document.createElement("div");
+        addProjectPopup.id = "add-project-popup";
+        sidebar.appendChild(addProjectPopup);
+
+        const header = document.createElement("div");
+        header.id = "add-project-header";
+        header.textContent = "New Project"
+        addProjectPopup.appendChild(header);
+
+        const title = document.createElement("input");
+        title.id = "add-project-title";
+        title.placeholder = "Add title";
+        title.maxlength = "30";
+        title.required = true;
+        addProjectPopup.appendChild(title);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.id = "add-project-button-container";
+        addProjectPopup.appendChild(buttonContainer);
+
+        const save = document.createElement("button");
+        save.id = "add-project-save";
+        save.textContent = "Save";
+        buttonContainer.appendChild(save);
+
+        // Publish "Add new todo" event
+        // save.addEventListener("click", () => {
+        //     events.emit("User inputs new todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value]);
+        // })
+
+        // If new todo successfully added, close popup
+        // events.on("todos changed", () => {
+        //     body.removeChild(addTodoPopup)
+        //     body.removeChild(addTodoOverlay)
+        // });
+
+        const cancel = document.createElement("button");
+        cancel.id = "add-project-cancel";
+        cancel.textContent = "Cancel";
+        buttonContainer.appendChild(cancel);
+
+        // Cancel button closes popup
+        cancel.addEventListener("click", () => {
+            sidebar.removeChild(addProjectPopup)
+            sidebar.removeChild(overlay)
+        });
+
+        // Create transparent overlay behind popup
+        const overlay = document.createElement("div");
+        overlay.id = "overlay";
+        sidebar.appendChild(overlay);
+
+        // body.appendChild(addTodoPopup);
+        // body.appendChild(addTodoOverlay);
+    }
 })();
 
 export { renderAllTasks, renderProjectList, addTodoPopup };
