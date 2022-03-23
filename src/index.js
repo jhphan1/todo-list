@@ -1,6 +1,6 @@
 import './style.css';
 import events from "./pubsub";
-import displayController from './displayController';
+import { renderAllTasks, addTodoPopup } from './displayController';
 
 // INDEX.JS - application logic
 //     --Todos array

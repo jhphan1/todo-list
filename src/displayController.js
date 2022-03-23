@@ -1,10 +1,10 @@
 import events from "./pubsub";
 import app from "./index";
 
-const displayController = (() => {
-    events.on("todos changed", renderAllTasks);
+const renderAllTasks = (() => {
+    events.on("todos changed", render);
 
-    function renderAllTasks(todos) {
+    function render(todos) {
         const main = document.querySelector("#main");
 
         // Remove current todo elements
@@ -55,9 +55,11 @@ const displayController = (() => {
             main.appendChild(todoContainer);
         })
     }
+})();
 
+const addTodoPopup = (() => {
     // add-todo button
-    const addTodoButton = document.querySelector("#add-todo");
+    const addTodoButton = document.querySelector("#add-todo-button");
     addTodoButton.addEventListener("click", displayAddTodo);
 
     function displayAddTodo() {
@@ -187,4 +189,4 @@ const displayController = (() => {
 
 })();
 
-export default displayController;
+export { renderAllTasks, addTodoPopup };
