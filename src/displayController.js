@@ -48,6 +48,7 @@ const displayController = (() => {
     addTodoButton.addEventListener("click", displayAddTodo);
 
     function displayAddTodo() {
+        // Generate Add Todo Popup
         const body = document.querySelector("body");
 
         const addTodoPopup = document.createElement("div");
@@ -58,7 +59,7 @@ const displayController = (() => {
         header.textContent = "New Task"
         addTodoPopup.appendChild(header);
 
-        const content = document.createElement("div");
+        const content = document.createElement("form");
         content.id = "add-todo-content";
         addTodoPopup.appendChild(content);
 
@@ -85,6 +86,7 @@ const displayController = (() => {
         const date = document.createElement("input");
         date.type = "date";
         date.id = "add-todo-date";
+        date.required = true;
         content.appendChild(date);
 
         const projectLabel = document.createElement("label");
@@ -94,6 +96,7 @@ const displayController = (() => {
 
         const project = document.createElement("select");
         project.id = "add-todo-project";
+        project.required = true;
 
         const project1 = document.createElement("option");
         project1.value = "personal";
@@ -114,6 +117,7 @@ const displayController = (() => {
 
         const priority = document.createElement("select");
         priority.id = "add-todo-priority";
+        priority.required = true;
 
         const priority1 = document.createElement("option");
         priority1.value = "normal";
@@ -134,18 +138,30 @@ const displayController = (() => {
 
         const buttonContainer = document.createElement("div");
         buttonContainer.id = "add-todo-button-container";
-        content.appendChild(buttonContainer);
+        addTodoPopup.appendChild(buttonContainer);
 
         const save = document.createElement("button");
         save.id = "add-todo-save";
         save.textContent = "Save";
         buttonContainer.appendChild(save);
 
+        // Publish "Add new todo" event
+        save.addEventListener("click", () => {
+            events.emit("User inputs new todo", [title.value, description.value, date.value, project.options[project.selectedIndex].value, priority.options[priority.selectedIndex].value]);
+        })
+
+        // If new todo successfully added, close popup
+        events.on("todos changed", () => {
+            body.removeChild(addTodoPopup)
+            body.removeChild(addTodoOverlay)
+        });
+
         const cancel = document.createElement("button");
         cancel.id = "add-todo-cancel";
         cancel.textContent = "Cancel";
         buttonContainer.appendChild(cancel);
 
+        // Cancel button closes popup
         cancel.addEventListener("click", () => {
             body.removeChild(addTodoPopup)
             body.removeChild(addTodoOverlay)

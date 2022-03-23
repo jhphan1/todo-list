@@ -3,7 +3,7 @@ import events from "./pubsub";
 import displayController from './displayController';
 
 // INDEX.JS - application logic
-//     Todos array
+//     --Todos array
 //         Create a todo
 //         Complete a todo
 //         Change todo properties
@@ -29,4 +29,48 @@ const app = (() => {
     todos.push(todo1, todo2, todo3);
 
     events.emit("todos changed", todos);
+
+    // Subscribe to when a user adds new todo using popup
+    events.on("User inputs new todo", addTodo);
+
+    function addTodo(userInput) {
+        let title;
+        let description;
+        let date;
+        let project;
+        let priority;
+
+        // Error check user input from addTodoPopup
+        // $$TODO: Check if title already exists
+        if (!userInput[0]) {
+            return alert("Please add title.");
+        } else {
+            title = userInput[0];
+        }
+
+        description = userInput[1];
+
+        if (!userInput[2]) {
+            return alert("Please add due date.");
+        } else {
+            date = userInput[2];
+        }
+
+        if (!userInput[3]) {
+            return alert("Please assign to a project.");
+        } else {
+            project = userInput[3];
+        }
+
+        if (!userInput[4]) {
+            return alert("Please select a priority level.");
+        } else {
+            priority = userInput[4];
+        }
+
+        // Create new todo object and add to array
+        const aTodo = todoFactory(title, description, date, project, priority);
+        todos.push(aTodo);
+        events.emit("todos changed", todos);
+    }
 })();
