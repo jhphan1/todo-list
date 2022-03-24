@@ -186,29 +186,31 @@ const addTodoPopup = (() => {
             events.emit("User inputs new todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value]);
         })
 
-        // If new todo successfully added, close popup
-        events.on("todos changed", () => {
-            body.removeChild(addTodoPopup)
-            body.removeChild(addTodoOverlay)
-        });
-
         const cancel = document.createElement("button");
         cancel.id = "add-todo-cancel";
         cancel.textContent = "Cancel";
         buttonContainer.appendChild(cancel);
 
         // Cancel button closes popup
-        cancel.addEventListener("click", () => {
-            body.removeChild(addTodoPopup)
-            body.removeChild(addTodoOverlay)
-        });
+        cancel.addEventListener("click", removeAddTodoPopup);
 
         // Create transparent overlay behind popup
         const addTodoOverlay = document.createElement("div");
         addTodoOverlay.id = "overlay";
 
+        // If new todo successfully added, close popup
+        events.on("todos changed", removeAddTodoPopup);
+
         body.appendChild(addTodoPopup);
         body.appendChild(addTodoOverlay);
+    }
+
+    function removeAddTodoPopup() {
+        const body = document.querySelector("body");
+        const addTodoPopup = document.querySelector("#add-todo-popup");
+        const addTodoOverlay = document.querySelector("#overlay");
+        console.log(body.removeChild(addTodoPopup));
+        console.log(body.removeChild(addTodoOverlay));
     }
 })();
 
@@ -261,19 +263,21 @@ const addProjectPopup = (() => {
         cancel.textContent = "Cancel";
         buttonContainer.appendChild(cancel);
 
-        // Cancel button closes popup
-        cancel.addEventListener("click", () => {
-            sidebar.removeChild(addProjectPopup)
-            sidebar.removeChild(overlay)
-        });
-
         // Create transparent overlay behind popup
         const overlay = document.createElement("div");
         overlay.id = "overlay";
         sidebar.appendChild(overlay);
 
-        // body.appendChild(addTodoPopup);
-        // body.appendChild(addTodoOverlay);
+        // Ways to close popup
+        cancel.addEventListener("click", () => {
+            sidebar.removeChild(addProjectPopup)
+            sidebar.removeChild(overlay)
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.removeChild(addProjectPopup)
+            sidebar.removeChild(overlay)
+        })
     }
 })();
 

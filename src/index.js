@@ -29,7 +29,7 @@ const app = (() => {
     const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "2022-03-15", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
-    events.emit("todos changed", todos);
+    // events.emit("todos changed", todos);
 
     // Pre-fill projects array
     projects[0] = "Personal";
