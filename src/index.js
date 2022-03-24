@@ -29,15 +29,16 @@ const app = (() => {
     const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "2022-03-15", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
-    // events.emit("todos changed", todos);
+    events.emit("todos changed", todos);
 
     // Pre-fill projects array
     projects[0] = "Personal";
 
     events.emit("Projects changed", projects);
 
-    // Subscribe to when a user adds new todo using popup
+    // Subscribe to when a user adds new todo or project
     events.on("User inputs new todo", addTodo);
+    events.on("User inputs new project", addProject);
 
     function addTodo(userInput) {
         let title;
@@ -78,6 +79,18 @@ const app = (() => {
         const aTodo = todoFactory(title, description, date, project, priority);
         todos.push(aTodo);
         events.emit("todos changed", todos);
+    }
+
+    function addProject(userInput) {
+        if (!userInput) {
+            return alert("Please add title.");
+            // $$ TODO: More error checking
+                // Does title already exist?
+                // Character limits
+        } else {
+            projects.push(userInput);
+            events.emit("Projects changed", projects);
+        }
     }
 
     return { projects };

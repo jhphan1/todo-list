@@ -63,6 +63,12 @@ const renderProjectList = (() => {
     events.on("Projects changed", render)
 
     function render(projects) {
+        // Remove current project elements
+        while (projectContainer.childNodes.length > 0) {
+            projectContainer.removeChild(projectContainer.lastChild);
+        }
+
+        // Generate new list
         projects.forEach(project => {
             const submenu = document.createElement("div");
             submenu.classList.add("submenu");
@@ -247,16 +253,10 @@ const addProjectPopup = (() => {
         save.textContent = "Save";
         buttonContainer.appendChild(save);
 
-        // Publish "Add new todo" event
-        // save.addEventListener("click", () => {
-        //     events.emit("User inputs new todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value]);
-        // })
-
-        // If new todo successfully added, close popup
-        // events.on("todos changed", () => {
-        //     body.removeChild(addTodoPopup)
-        //     body.removeChild(addTodoOverlay)
-        // });
+        // Send user input to app for error checking
+        save.addEventListener("click", () => {
+            events.emit("User inputs new project", title.value);
+        })
 
         const cancel = document.createElement("button");
         cancel.id = "add-project-cancel";
@@ -269,15 +269,17 @@ const addProjectPopup = (() => {
         sidebar.appendChild(overlay);
 
         // Ways to close popup
-        cancel.addEventListener("click", () => {
-            sidebar.removeChild(addProjectPopup)
-            sidebar.removeChild(overlay)
-        });
+        cancel.addEventListener("click", removeAddProjectPopup);
+        overlay.addEventListener("click", removeAddProjectPopup);
+        events.on("Projects changed", removeAddProjectPopup);
+    }
 
-        overlay.addEventListener("click", () => {
-            sidebar.removeChild(addProjectPopup)
-            sidebar.removeChild(overlay)
-        })
+    function removeAddProjectPopup() {
+        const sidebar = document.querySelector("#sidebar");
+        const addProjectPopup = document.querySelector("#add-project-popup");
+        const overlay = document.querySelector("#overlay");
+        sidebar.removeChild(addProjectPopup);
+        sidebar.removeChild(overlay);
     }
 })();
 
