@@ -86,7 +86,7 @@ body {
     display: grid;
     grid-template-columns: auto 1fr auto 100px auto;
     align-items: center;
-    gap: 1rem;
+    column-gap: 1rem;
 }
 
 .project-label {
@@ -115,6 +115,11 @@ body {
 
 .priority-high {
     background-color: red;
+}
+
+.todo-expanded {
+    background-color: red;
+    grid-column: 1/6;
 }
 
 #add-todo-button {

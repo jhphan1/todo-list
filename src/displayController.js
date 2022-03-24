@@ -53,6 +53,19 @@ const renderAllTasks = (() => {
             todoContainer.appendChild(priority);
 
             main.appendChild(todoContainer);
+
+            // Hidden elements that expand when todo is clicked
+            todoContainer.addEventListener("click", () => {
+                // Toggle on/off
+                if (todoContainer.childNodes.length > 5) {
+                    todoContainer.removeChild(todoContainer.lastChild);
+                } else {
+                    const todoExpanded = document.createElement("div");
+                    todoExpanded.classList.add("todo-expanded");
+                    todoExpanded.textContent = "Hi, i'm expanded";
+                    todoContainer.appendChild(todoExpanded);
+                }
+            });
         })
     }
 })();
