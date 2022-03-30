@@ -90,6 +90,10 @@ body {
     row-gap: 0.5rem;
 }
 
+.todo:hover {
+    background-color: whitesmoke;
+}
+
 .project-label {
     grid-column: 4;
     font-size: 0.85rem;

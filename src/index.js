@@ -1,6 +1,7 @@
 import './style.css';
 import events from "./pubsub";
-import { renderAllTasks, renderProjectList, addTodoPopup } from './displayController';
+import { renderAllTasks, renderProjectList } from './displayController';
+import { editTodoPopup, deleteTodoPopup } from './popups';
 
 // INDEX.JS - application logic
 //     --Todos array
