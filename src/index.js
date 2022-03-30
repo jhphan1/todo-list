@@ -95,9 +95,11 @@ const app = (() => {
         let priority;
 
         // Error check user input from addTodoPopup
-        // $$TODO: Check if title already exists
         if (!userInput[0]) {
             return alert("Please add title.");
+        // Checks if title already exists and is also not the todo being edited
+        } else if (todos.find(todo => todo.title === userInput[0]) && userInput[0] !== targetTodo) {
+            return alert("That title already exists.");
         } else {
             title = userInput[0];
         }
