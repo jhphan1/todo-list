@@ -44,6 +44,8 @@ const app = (() => {
             return alert("Please add title.");
         } else if (todos.find(todo => todo.title === userInput[0])) {
             return alert("That title already exists.");
+        } else if (userInput[0].length > 60) {
+            return alert("Title cannot exceed 60 characters.");
         } else {
             title = userInput[0];
         }

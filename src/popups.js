@@ -27,14 +27,12 @@ const addTodoPopup = (() => {
         const title = document.createElement("input");
         title.classList.add("input-todo-title");
         title.placeholder = "Add title";
-        title.maxlength = "30";
-        title.required = true;
+        title.autofocus = "true";
         content.appendChild(title);
 
         const description = document.createElement("textarea");
         description.classList.add("input-todo-description");
         description.placeholder = "Add description";
-        description.maxlength = "150";
         description.cols = "50";
         description.rows = "4";
         content.appendChild(description);
@@ -47,7 +45,6 @@ const addTodoPopup = (() => {
         const date = document.createElement("input");
         date.type = "date";
         date.id = "todo-date";
-        date.required = true;
         content.appendChild(date);
 
         const projectLabel = document.createElement("label");
@@ -57,7 +54,6 @@ const addTodoPopup = (() => {
 
         const projectSelect = document.createElement("select");
         projectSelect.id = "todo-project";
-        projectSelect.required = true;
 
         app.projects.forEach(project => {
             let option = document.createElement("option");
@@ -75,7 +71,6 @@ const addTodoPopup = (() => {
 
         const priority = document.createElement("select");
         priority.id = "todo-priority";
-        priority.required = true;
 
         const priority1 = document.createElement("option");
         priority1.value = "normal";
@@ -156,8 +151,6 @@ const addProjectPopup = (() => {
         title.id = "add-project-title";
         title.autofocus = "true";
         title.placeholder = "Add title";
-        title.maxlength = "30";
-        title.required = true;
         addProjectPopup.appendChild(title);
 
         const buttonContainer = document.createElement("div");
@@ -239,14 +232,12 @@ const editTodoPopup = (() => {
         const title = document.createElement("input");
         title.classList.add("input-todo-title");
         title.value = titlePlaceholder;
-        title.maxlength = "30";
-        title.required = true;
+        title.autofocus = true;
         content.appendChild(title);
 
         const description = document.createElement("textarea");
         description.classList.add("input-todo-description");
         description.value = descriptionPlaceholder;
-        description.maxlength = "150";
         description.cols = "50";
         description.rows = "4";
         content.appendChild(description);
@@ -260,7 +251,6 @@ const editTodoPopup = (() => {
         date.type = "date";
         date.id = "todo-date";
         date.value = datePlaceholder;
-        date.required = true;
         content.appendChild(date);
 
         const projectLabel = document.createElement("label");
@@ -270,7 +260,6 @@ const editTodoPopup = (() => {
 
         const projectSelect = document.createElement("select");
         projectSelect.id = "todo-project";
-        projectSelect.required = true;
 
         app.projects.forEach(project => {
             let option = document.createElement("option");
@@ -290,7 +279,6 @@ const editTodoPopup = (() => {
 
         const priority = document.createElement("select");
         priority.id = "todo-priority";
-        priority.required = true;
 
         const priority1 = document.createElement("option");
         priority1.value = "normal";
