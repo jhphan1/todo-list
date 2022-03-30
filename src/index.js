@@ -1,7 +1,7 @@
 import './style.css';
 import events from "./pubsub";
 import { renderAllTasks, renderProjectList } from './displayController';
-import { editTodoPopup, deleteTodoPopup } from './popups';
+import { editTodoPopup } from './popups';
 
 
 const app = (() => {
@@ -30,6 +30,7 @@ const app = (() => {
     events.on("User inputs new todo", addTodo);
     events.on("User inputs new project", addProject);
     events.on("User edits todo", editTodo);
+    events.on("User deletes todo", deleteTodo);
 
     function addTodo(userInput) {
         let title;
@@ -131,6 +132,12 @@ const app = (() => {
             }
         })
     
+        events.emit("todos changed", todos);
+    }
+
+    function deleteTodo(targetObject) {
+        todos = todos.filter(todo => todo.title !== targetObject);
+
         events.emit("todos changed", todos);
     }
 

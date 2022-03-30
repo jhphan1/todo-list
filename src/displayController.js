@@ -1,6 +1,6 @@
 import events from "./pubsub";
 import app from "./index";
-import { editTodoPopup, deleteTodoPopup } from "./popups";
+import { editTodoPopup } from "./popups";
 
 const renderAllTasks = (() => {
     events.on("todos changed", render);
@@ -83,7 +83,11 @@ const renderAllTasks = (() => {
                     trash.textContent = "Delete";
                     buttonContainer.appendChild(trash);
 
-                    trash.addEventListener("click", deleteTodoPopup.displayDeleteTodo);
+                    trash.addEventListener("click", (e) => {
+                        let targetObject = e.target.parentNode.parentNode.parentNode.children[1].textContent;
+                        events.emit("User deletes todo", targetObject);
+                    });
+
                     edit.addEventListener("click", editTodoPopup.displayEditTodo);
                 }
             });

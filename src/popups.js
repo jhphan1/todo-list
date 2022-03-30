@@ -355,13 +355,4 @@ const editTodoPopup = (() => {
     return { displayEditTodo };
 })();
 
-const deleteTodoPopup = (() => {
-    function displayDeleteTodo(e) {
-        console.log(this);
-        e.stopPropagation();
-    }
-
-    return { displayDeleteTodo };
-})();
-
-export { editTodoPopup, deleteTodoPopup };
+export { editTodoPopup };
