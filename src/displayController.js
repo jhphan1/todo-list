@@ -74,12 +74,12 @@ const renderAllTasks = (() => {
                     todoExpanded.appendChild(buttonContainer);
 
                     const edit = document.createElement("button");
-                    edit.classList.add("edit-todo-button");
+                    edit.id = "edit-todo-button";
                     edit.textContent = "Edit";
                     buttonContainer.appendChild(edit);
 
                     const trash = document.createElement("button");
-                    trash.classList.add("trash-todo-button");
+                    trash.id = "trash-todo-button";
                     trash.textContent = "Delete";
                     buttonContainer.appendChild(trash);
 
