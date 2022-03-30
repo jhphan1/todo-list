@@ -3,17 +3,6 @@ import events from "./pubsub";
 import { renderAllTasks, renderProjectList } from './displayController';
 import { editTodoPopup, deleteTodoPopup } from './popups';
 
-// INDEX.JS - application logic
-//     --Todos array
-//         Create a todo
-//         Complete a todo
-//         Change todo properties
-
-//     Projects array
-//         Create a project
-//         Delete a project
-
-//     Completed Todos array?
 
 const app = (() => {
     let todos = [];
@@ -37,9 +26,10 @@ const app = (() => {
 
     events.emit("Projects changed", projects);
 
-    // Subscribe to when a user adds new todo or project
+    // Subscribe to user input events
     events.on("User inputs new todo", addTodo);
     events.on("User inputs new project", addProject);
+    events.on("User edits todo", editTodo);
 
     function addTodo(userInput) {
         let title;
@@ -92,6 +82,56 @@ const app = (() => {
             projects.push(userInput);
             events.emit("Projects changed", projects);
         }
+    }
+
+    function editTodo(userInput) {
+        let targetTodo = userInput[5];
+        let title;
+        let description;
+        let date;
+        let project;
+        let priority;
+
+        // Error check user input from addTodoPopup
+        // $$TODO: Check if title already exists
+        if (!userInput[0]) {
+            return alert("Please add title.");
+        } else {
+            title = userInput[0];
+        }
+
+        description = userInput[1];
+
+        if (!userInput[2]) {
+            return alert("Please add due date.");
+        } else {
+            date = userInput[2];
+        }
+
+        if (!userInput[3]) {
+            return alert("Please assign to a project.");
+        } else {
+            project = userInput[3];
+        }
+
+        if (!userInput[4]) {
+            return alert("Please select a priority level.");
+        } else {
+            priority = userInput[4];
+        }
+
+        // Edit todo object
+        todos.forEach(todo => {
+            if (todo.title === targetTodo) {
+                todo.title = title;
+                todo.description = description;
+                todo.dueDate = date;
+                todo.project = project;
+                todo.priority = priority;
+            }
+        })
+    
+        events.emit("todos changed", todos);
     }
 
     return { todos, projects };

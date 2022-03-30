@@ -318,10 +318,10 @@ const editTodoPopup = (() => {
         save.textContent = "Save";
         buttonContainer.appendChild(save);
 
-        // Publish "Add new todo" event
-        // save.addEventListener("click", () => {
-        //     events.emit("User inputs new todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value]);
-        // })
+        // Publish Edit Todo event
+        save.addEventListener("click", () => {
+            events.emit("User edits todo", [title.value, description.value, date.value, projectSelect.options[projectSelect.selectedIndex].value, priority.options[priority.selectedIndex].value, targetTodo]);
+        })
 
         const cancel = document.createElement("button");
         cancel.textContent = "Cancel";
@@ -334,11 +334,13 @@ const editTodoPopup = (() => {
         const overlay = document.createElement("div");
         overlay.id = "overlay";
 
-        // If new todo successfully added, close popup
+        // If new todo successfully edited, close popup
         events.on("todos changed", removeEditTodoPopup);
 
         body.appendChild(editTodoPopup);
         body.appendChild(overlay);
+
+        // Click event listener stops on button (doesn't collapse expanded todo)
         e.stopPropagation();
     }
 
