@@ -94,7 +94,7 @@ const app = (() => {
         }
     }
 
-    return { projects };
+    return { todos, projects };
 })();
 
 export default app;

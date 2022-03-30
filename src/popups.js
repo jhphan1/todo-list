@@ -83,7 +83,7 @@ const addTodoPopup = (() => {
         priority.appendChild(priority1);
 
         const priority2 = document.createElement("option");
-        priority2.value = "med";
+        priority2.value = "medium";
         priority2.textContent = "Medium";
         priority.appendChild(priority2);
 
@@ -200,7 +200,27 @@ const addProjectPopup = (() => {
 
 const editTodoPopup = (() => {
     function displayEditTodo(e) {
-        // Generate Add Todo Popup
+        // Find todo object associated with this edit button
+        let targetTodo = e.target.parentNode.parentNode.parentNode.children[1].textContent;
+
+        // Create placeholders to be used in editTodoPopup form
+        let titlePlaceholder;
+        let descriptionPlaceholder;
+        let datePlaceholder;
+        let projectPlaceholder;
+        let priorityPlaceholder;
+
+        app.todos.forEach(todo => {
+            if (todo.title === targetTodo) {
+                titlePlaceholder = todo.title;
+                descriptionPlaceholder = todo.description;
+                datePlaceholder = todo.dueDate;
+                projectPlaceholder = todo.project;
+                priorityPlaceholder = todo.priority;
+            }
+        })
+
+        // Generate Edit Todo Popup
         const body = document.querySelector("body");
 
         const editTodoPopup = document.createElement("div");
@@ -217,14 +237,14 @@ const editTodoPopup = (() => {
 
         const title = document.createElement("input");
         title.classList.add("input-todo-title");
-        title.placeholder = "Edit title";
+        title.value = titlePlaceholder;
         title.maxlength = "30";
         title.required = true;
         content.appendChild(title);
 
         const description = document.createElement("textarea");
         description.classList.add("input-todo-description");
-        description.placeholder = "Edit description";
+        description.value = descriptionPlaceholder;
         description.maxlength = "150";
         description.cols = "50";
         description.rows = "4";
@@ -238,6 +258,7 @@ const editTodoPopup = (() => {
         const date = document.createElement("input");
         date.type = "date";
         date.id = "todo-date";
+        date.value = datePlaceholder;
         date.required = true;
         content.appendChild(date);
 
@@ -257,6 +278,8 @@ const editTodoPopup = (() => {
             projectSelect.appendChild(option);
         });
 
+        projectSelect.value = projectPlaceholder;
+
         content.appendChild(projectSelect);
 
         const priorityLabel = document.createElement("label");
@@ -274,7 +297,7 @@ const editTodoPopup = (() => {
         priority.appendChild(priority1);
 
         const priority2 = document.createElement("option");
-        priority2.value = "med";
+        priority2.value = "medium";
         priority2.textContent = "Medium";
         priority.appendChild(priority2);
 
@@ -283,6 +306,7 @@ const editTodoPopup = (() => {
         priority3.textContent = "High";
         priority.appendChild(priority3);
 
+        priority.value = priorityPlaceholder;
         content.appendChild(priority);
 
         const buttonContainer = document.createElement("div");
