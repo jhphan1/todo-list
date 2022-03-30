@@ -40,9 +40,10 @@ const app = (() => {
         let priority;
 
         // Error check user input from addTodoPopup
-        // $$TODO: Check if title already exists
         if (!userInput[0]) {
             return alert("Please add title.");
+        } else if (todos.find(todo => todo.title === userInput[0])) {
+            return alert("That title already exists.");
         } else {
             title = userInput[0];
         }
