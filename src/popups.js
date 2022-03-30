@@ -154,6 +154,7 @@ const addProjectPopup = (() => {
 
         const title = document.createElement("input");
         title.id = "add-project-title";
+        title.autofocus = "true";
         title.placeholder = "Add title";
         title.maxlength = "30";
         title.required = true;

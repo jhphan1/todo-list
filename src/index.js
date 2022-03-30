@@ -77,9 +77,10 @@ const app = (() => {
     function addProject(userInput) {
         if (!userInput) {
             return alert("Please add title.");
-            // $$ TODO: More error checking
-                // Does title already exist?
-                // Character limits
+        } else if (projects.find(project => project === userInput)) {
+            return alert("That title already exists.");
+        } else if (userInput.length > 20) {
+            return alert("Project title cannot exceed 12 characters.");
         } else {
             projects.push(userInput);
             events.emit("Projects changed", projects);
