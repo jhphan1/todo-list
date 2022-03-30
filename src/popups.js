@@ -13,7 +13,7 @@ const addTodoPopup = (() => {
         const body = document.querySelector("body");
 
         const addTodoPopup = document.createElement("div");
-        addTodoPopup.id = "add-todo-popup";
+        addTodoPopup.classList.add("todo-popup");
 
         const header = document.createElement("div");
         header.id = "add-todo-header";
@@ -21,18 +21,18 @@ const addTodoPopup = (() => {
         addTodoPopup.appendChild(header);
 
         const content = document.createElement("form");
-        content.id = "add-todo-content";
+        content.classList.add("todo-popup-content");
         addTodoPopup.appendChild(content);
 
         const title = document.createElement("input");
-        title.id = "add-todo-title";
+        title.classList.add("input-todo-title");
         title.placeholder = "Add title";
         title.maxlength = "30";
         title.required = true;
         content.appendChild(title);
 
         const description = document.createElement("textarea");
-        description.id = "add-todo-description";
+        description.classList.add("input-todo-description");
         description.placeholder = "Add description";
         description.maxlength = "150";
         description.cols = "50";
@@ -40,23 +40,23 @@ const addTodoPopup = (() => {
         content.appendChild(description);
 
         const dateLabel = document.createElement("label");
-        dateLabel.for = "add-todo-date";
+        dateLabel.for = "todo-date";
         dateLabel.textContent = "Due date: ";
         content.appendChild(dateLabel);
 
         const date = document.createElement("input");
         date.type = "date";
-        date.id = "add-todo-date";
+        date.id = "todo-date";
         date.required = true;
         content.appendChild(date);
 
         const projectLabel = document.createElement("label");
-        projectLabel.for = "add-todo-project";
+        projectLabel.for = "todo-project";
         projectLabel.textContent = "Add to project: ";
         content.appendChild(projectLabel);
 
         const projectSelect = document.createElement("select");
-        projectSelect.id = "add-todo-project";
+        projectSelect.id = "todo-project";
         projectSelect.required = true;
 
         app.projects.forEach(project => {
@@ -69,12 +69,12 @@ const addTodoPopup = (() => {
         content.appendChild(projectSelect);
 
         const priorityLabel = document.createElement("label");
-        priorityLabel.for = "add-todo-priority";
+        priorityLabel.for = "todo-priority";
         priorityLabel.textContent = "Add priority level: ";
         content.appendChild(priorityLabel);
 
         const priority = document.createElement("select");
-        priority.id = "add-todo-priority";
+        priority.id = "todo-priority";
         priority.required = true;
 
         const priority1 = document.createElement("option");
@@ -95,11 +95,11 @@ const addTodoPopup = (() => {
         content.appendChild(priority);
 
         const buttonContainer = document.createElement("div");
-        buttonContainer.id = "add-todo-button-container";
+        buttonContainer.classList.add("todo-popup-button-container");
         addTodoPopup.appendChild(buttonContainer);
 
         const save = document.createElement("button");
-        save.id = "add-todo-save";
+        save.classList.add("todo-popup-save");
         save.textContent = "Save";
         buttonContainer.appendChild(save);
 
@@ -109,7 +109,6 @@ const addTodoPopup = (() => {
         })
 
         const cancel = document.createElement("button");
-        cancel.id = "add-todo-cancel";
         cancel.textContent = "Cancel";
         buttonContainer.appendChild(cancel);
 
@@ -129,7 +128,7 @@ const addTodoPopup = (() => {
 
     function removeAddTodoPopup() {
         const body = document.querySelector("body");
-        const addTodoPopup = document.querySelector("#add-todo-popup");
+        const addTodoPopup = document.querySelector(".todo-popup");
         const addTodoOverlay = document.querySelector("#overlay");
         console.log(body.removeChild(addTodoPopup));
         console.log(body.removeChild(addTodoOverlay));
