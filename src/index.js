@@ -50,7 +50,11 @@ const app = (() => {
             title = userInput[0];
         }
 
-        description = userInput[1];
+        if (userInput[1].length > 200) {
+            return alert("Description cannot exceed 200 characters.");
+        } else {
+            description = userInput[1];
+        }
 
         if (!userInput[2]) {
             return alert("Please add due date.");
@@ -103,11 +107,17 @@ const app = (() => {
         // Checks if title already exists and is also not the todo being edited
         } else if (todos.find(todo => todo.title === userInput[0]) && userInput[0] !== targetTodo) {
             return alert("That title already exists.");
+        } else if (userInput[0].length > 60) {
+            return alert("Title cannot exceed 60 characters.");
         } else {
             title = userInput[0];
         }
 
-        description = userInput[1];
+        if (userInput[1].length > 200) {
+            return alert("Description cannot exceed 200 characters.");
+        } else {
+            description = userInput[1];
+        }
 
         if (!userInput[2]) {
             return alert("Please add due date.");
