@@ -19,6 +19,13 @@ const renderAllTasks = (() => {
         title.textContent = "All Tasks";
         main.appendChild(title);
 
+        // Sort todos array by due date (ascending order)
+        todos.sort((a, b) => {
+            if (a.dueDate < b.dueDate) return -1;
+            if (a.dueDate > b.dueDate) return 1;
+            if (a.dueDate == b.dueDate) return 0;
+        })
+
         // Render new todos list
         todos.forEach(todo => {
             const todoContainer = document.createElement("div");
