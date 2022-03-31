@@ -26,6 +26,13 @@ const renderAllTasks = (() => {
             if (a.dueDate == b.dueDate) return 0;
         })
 
+        // Sort completed todos to the bottom of list
+        todos.sort((a, b) => {
+            if (a.completed && !b.completed) return 1;
+            if (!a.completed && b.completed) return -1;
+            if (a.completed && b.completed || !a.completed && !b.completed) return 0;
+        })
+
         // Render new todos list
         todos.forEach(todo => {
             const todoContainer = document.createElement("div");
