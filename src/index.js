@@ -31,6 +31,8 @@ const app = (() => {
     events.on("User inputs new project", addProject);
     events.on("User edits todo", editTodo);
     events.on("User deletes todo", deleteTodo);
+    events.on("User completes todo", completeTodo);
+    events.on("User un-completes todo", uncompleteTodo);
 
     function addTodo(userInput) {
         let title;
@@ -155,6 +157,14 @@ const app = (() => {
         todos = todos.filter(todo => todo.title !== targetObject);
 
         events.emit("todos changed", todos);
+    }
+
+    function completeTodo(targetObject) {
+        console.log("User completed " + targetObject);
+    }
+
+    function uncompleteTodo(targetObject) {
+        console.log("User UN-completed " + targetObject);
     }
 
     return { todos, projects };

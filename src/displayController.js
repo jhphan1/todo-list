@@ -26,7 +26,17 @@ const renderAllTasks = (() => {
 
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-                // Add checkbox ID
+            // Tell app when user completes/un-completes todo
+            checkbox.addEventListener("change", () => {
+                if (checkbox.checked) {
+                    events.emit("User completes todo", todoTitle.textContent);
+                } else {
+                    events.emit("User un-completes todo", todoTitle.textContent);
+                }
+            })
+            // Clicking checkbox doesn't expand todo
+            checkbox.addEventListener("click", e => e.stopPropagation());
+            
             todoContainer.appendChild(checkbox);
 
             const todoTitle = document.createElement("span");
