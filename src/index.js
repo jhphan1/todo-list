@@ -2,6 +2,7 @@ import './style.css';
 import events from "./pubsub";
 import { renderAllTasks, renderProjectList } from './displayController';
 import { editTodoPopup } from './popups';
+import { format } from 'date-fns';
 
 
 const app = (() => {
@@ -62,7 +63,8 @@ const app = (() => {
         if (!userInput[2]) {
             return alert("Please add due date.");
         } else {
-            date = userInput[2];
+            // Format due date
+            date = format((new Date(userInput[2])), 'MM/dd/yy');
         }
 
         if (!userInput[3]) {
@@ -125,7 +127,8 @@ const app = (() => {
         if (!userInput[2]) {
             return alert("Please add due date.");
         } else {
-            date = userInput[2];
+            // Format due date
+            date = format((new Date(userInput[2])), 'MM/dd/yy');
         }
 
         if (!userInput[3]) {
