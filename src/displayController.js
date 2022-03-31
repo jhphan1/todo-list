@@ -1,7 +1,7 @@
 import events from "./pubsub";
 import app from "./index";
 import { editTodoPopup } from "./popups";
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, parse } from 'date-fns';
 
 const renderAllTasks = (() => {
     // events.on("todos changed", render);
@@ -132,6 +132,9 @@ const renderToday = (() => {
 
     // Find today's date
     let today = format((new Date()), 'MM/dd/yy');
+
+    let someDate = format(parse("12/14/92", "MM/dd/yy", new Date()), 'yyyy-MM-dd');
+    console.log(someDate);
 
     function render(todos) {
         const main = document.querySelector("#main");

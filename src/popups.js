@@ -1,6 +1,7 @@
 import events from "./pubsub";
 import app from "./index";
 import { renderAllTasks, renderProjectList } from './displayController';
+import { format, parseISO, parse } from 'date-fns';
 
 
 const addTodoPopup = (() => {
@@ -208,7 +209,7 @@ const editTodoPopup = (() => {
             if (todo.title === targetTodo) {
                 titlePlaceholder = todo.title;
                 descriptionPlaceholder = todo.description;
-                datePlaceholder = todo.dueDate;
+                datePlaceholder = format(parse(todo.dueDate, "MM/dd/yy", new Date()), 'yyyy-MM-dd'); // Re-format date to ISO
                 projectPlaceholder = todo.project;
                 priorityPlaceholder = todo.priority;
             }
