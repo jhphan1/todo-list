@@ -131,10 +131,7 @@ const renderToday = (() => {
     events.on("todos changed", render);
 
     // Find today's date
-    let today = format(parseISO("2022-03-16"), 'MM/dd/yy');
-    console.log(today);
-    // let today = format((new Date()), 'MM/dd/yy');
-    // console.log(today);
+    let today = format((new Date()), 'MM/dd/yy');
 
     function render(todos) {
         const main = document.querySelector("#main");
@@ -150,22 +147,18 @@ const renderToday = (() => {
         title.textContent = "Today";
         main.appendChild(title);
 
-        // Sort todos array by due date (ascending order)
-        todos.sort((a, b) => {
-            if (a.dueDate < b.dueDate) return -1;
-            if (a.dueDate > b.dueDate) return 1;
-            if (a.dueDate == b.dueDate) return 0;
-        })
+        // Filter for only todos due today
+        let todaysTodos = todos.filter(todo => todo.dueDate === today);
 
         // Sort completed todos to the bottom of list
-        todos.sort((a, b) => {
+        todaysTodos.sort((a, b) => {
             if (a.completed && !b.completed) return 1;
             if (!a.completed && b.completed) return -1;
             if (a.completed && b.completed || !a.completed && !b.completed) return 0;
         })
 
         // Render new todos list
-        todos.forEach(todo => {
+        todaysTodos.forEach(todo => {
             const todoContainer = document.createElement("div");
             // Change appearance of todo based on 'completed' property
             if (todo.completed === false) {
