@@ -3,8 +3,21 @@ import app from "./index";
 import { editTodoPopup } from "./popups";
 import { format, parseISO, parse } from 'date-fns';
 
-// Renders list of todos onto page using todos array
-function renderTodos(todosArray) {
+// Renders page using todos array sorted by due date
+function renderPage(pageTitle, todosArray) {
+    const main = document.querySelector("#main");
+
+    // Remove current todo elements on page
+    while (main.childNodes.length > 1) {
+        main.removeChild(main.lastChild);
+    }
+
+    // Render title
+    const title = document.createElement("div");
+    title.classList.add("title");
+    title.textContent = pageTitle;
+    main.appendChild(title);
+
     // Sort todos array by due date (ascending order)
     todosArray.sort((a, b) => {
         if (a.dueDate < b.dueDate) return -1;
@@ -19,6 +32,7 @@ function renderTodos(todosArray) {
         if (a.completed && b.completed || !a.completed && !b.completed) return 0;
     })
 
+    // Render todos list
     todosArray.forEach(todo => {
         const todoContainer = document.createElement("div");
         // Change appearance of todo based on 'completed' property
@@ -115,49 +129,23 @@ const renderAllTasks = (() => {
     // events.on("todos changed", render);
 
     function render(todos) {
-        const main = document.querySelector("#main");
-
-        // Remove current todo elements
-        while (main.childNodes.length > 1) {
-            main.removeChild(main.lastChild);
-        }
-
-        // Render title
-        const title = document.createElement("div");
-        title.classList.add("title");
-        title.textContent = "All Tasks";
-        main.appendChild(title);
-
-        // Render new todos list
-        renderTodos(todos);
+        renderPage("All Tasks", todos);
     }
 })();
 
+// Renders only todos due today
 const renderToday = (() => {
     events.on("todos changed", render);
 
-    // Find today's date
-    let today = format((new Date()), 'MM/dd/yy');
-
     function render(todos) {
-        const main = document.querySelector("#main");
-
-        // Remove current todo elements
-        while (main.childNodes.length > 1) {
-            main.removeChild(main.lastChild);
-        }
-
-        // Render title
-        const title = document.createElement("div");
-        title.classList.add("title");
-        title.textContent = "Today";
-        main.appendChild(title);
-
+        // Set today's date
+        let today = format((new Date()), 'MM/dd/yy');
+        
         // Filter for only todos due today
         let todaysTodos = todos.filter(todo => todo.dueDate === today);
 
         // Render new todos list
-        renderTodos(todaysTodos);
+        renderPage("Today", todaysTodos);
     }
 })();
 
