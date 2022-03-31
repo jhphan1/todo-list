@@ -10,7 +10,8 @@ const app = (() => {
 
     // todo factory function
     function todoFactory(title, description, dueDate, project, priority) {
-        return { title, description, dueDate, project, priority };
+        let completed = false;
+        return { title, description, dueDate, project, priority, completed };
     }
 
     // Pre-fill todos array
@@ -20,6 +21,8 @@ const app = (() => {
     todos.push(todo1, todo2, todo3);
 
     events.emit("todos changed", todos);
+
+    console.log(todos);
 
     // Pre-fill projects array
     projects[0] = "Personal";
