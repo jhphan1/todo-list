@@ -90,6 +90,18 @@ body {
     row-gap: 0.5rem;
 }
 
+.todo-completed {
+    border-bottom: 1px solid whitesmoke;
+    padding: 8px 8px;
+    display: grid;
+    grid-template-columns: auto 1fr auto 100px auto;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
 .todo:hover {
     background-color: whitesmoke;
 }

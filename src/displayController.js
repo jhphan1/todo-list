@@ -22,10 +22,17 @@ const renderAllTasks = (() => {
         // Render new todos list
         todos.forEach(todo => {
             const todoContainer = document.createElement("div");
-            todoContainer.classList.add("todo");
+            // Change appearance of todo based on 'completed' property
+            if (todo.completed === false) {
+                todoContainer.classList.add("todo");
+            } else {
+                todoContainer.classList.add("todo-completed");
+            }
 
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
+            // Render with checked box if todo completed
+            checkbox.checked = (todo.completed) ? true : false;
             // Tell app when user completes/un-completes todo
             checkbox.addEventListener("change", () => {
                 if (checkbox.checked) {

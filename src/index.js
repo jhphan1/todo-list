@@ -22,8 +22,6 @@ const app = (() => {
 
     events.emit("todos changed", todos);
 
-    console.log(todos);
-
     // Pre-fill projects array
     projects[0] = "Personal";
 
@@ -163,11 +161,23 @@ const app = (() => {
     }
 
     function completeTodo(targetObject) {
-        console.log("User completed " + targetObject);
+        todos.forEach(todo => {
+            if (todo.title === targetObject) {
+                todo.completed = true;
+            }
+        });
+
+        events.emit("todos changed", todos);
     }
 
     function uncompleteTodo(targetObject) {
-        console.log("User UN-completed " + targetObject);
+        todos.forEach(todo => {
+            if (todo.title === targetObject) {
+                todo.completed = false;
+            }
+        });
+
+        events.emit("todos changed", todos);
     }
 
     return { todos, projects };
