@@ -2,7 +2,7 @@ import './style.css';
 import events from "./pubsub";
 import { renderAllTasks, renderProjectList } from './displayController';
 import { editTodoPopup } from './popups';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 
 const app = (() => {
@@ -16,9 +16,9 @@ const app = (() => {
     }
 
     // Pre-fill todos array
-    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "2022-03-17", "Personal", "medium");
-    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "2022-03-16", "Personal", "normal");
-    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "2022-03-23", "Work", "high");
+    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "03/28/22", "Personal", "medium");
+    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/04/22", "Personal", "normal");
+    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "03/21/22", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
     events.emit("todos changed", todos);
@@ -64,7 +64,7 @@ const app = (() => {
             return alert("Please add due date.");
         } else {
             // Format due date
-            date = format((new Date(userInput[2])), 'MM/dd/yy');
+            date = format(parseISO(userInput[2]), 'MM/dd/yy');
         }
 
         if (!userInput[3]) {
@@ -128,7 +128,7 @@ const app = (() => {
             return alert("Please add due date.");
         } else {
             // Format due date
-            date = format((new Date(userInput[2])), 'MM/dd/yy');
+            date = format(parseISO(userInput[2]), 'MM/dd/yy');
         }
 
         if (!userInput[3]) {
