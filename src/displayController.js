@@ -1,7 +1,7 @@
 import events from "./pubsub";
 import app from "./index";
 import { editTodoPopup } from "./popups";
-import { format, parseISO, parse } from 'date-fns';
+import { format, parseISO, parse, add } from 'date-fns';
 
 // Renders page using todos array sorted by due date
 function renderPage(pageTitle, todosArray) {
@@ -135,17 +135,34 @@ const renderAllTasks = (() => {
 
 // Renders only todos due today
 const renderToday = (() => {
-    events.on("todos changed", render);
+    // events.on("todos changed", render);
+    
+    // Set today's date and format with date-fns
+    let today = format((new Date()), 'MM/dd/yy');
 
     function render(todos) {
-        // Set today's date
-        let today = format((new Date()), 'MM/dd/yy');
-        
         // Filter for only todos due today
         let todaysTodos = todos.filter(todo => todo.dueDate === today);
 
         // Render new todos list
         renderPage("Today", todaysTodos);
+    }
+})();
+
+// Renders only todos due in upcoming week
+const renderWeek = (() => {
+    events.on("todos changed", render);
+
+    // Set start and stop dates for the week using date-fns
+    let today = format((new Date()), 'MM/dd/yy');
+    let oneWeekLater = format((add(new Date(), {days: 7})), 'MM/dd/yy');
+
+    function render(todos) {
+        // Filter for only todos due in upcoming week
+        let oneWeeksTodos = todos.filter(todo => todo.dueDate >= today && todo.dueDate <= oneWeekLater);
+
+        // Render new todos list
+        renderPage("Next 7 Days", oneWeeksTodos);
     }
 })();
 
