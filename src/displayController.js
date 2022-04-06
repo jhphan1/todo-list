@@ -158,20 +158,20 @@ const renderWeek = (todos) => {
 };
 
 
+// Global variable that changes based on user DOM interaction
+let currentProjectPage;
+
+
 // Renders only todos belonging to a specific project
-const renderSpecificProject = (() => {
-    // events.on("todos changed", render);
+const renderProjectPage = (todos) => {
+    let project = window.currentProjectPage;
 
-    let selectedProject = "Personal"; // changes based on DOM interaction
+    // Filter for only todos belonging to user-selected project
+    let projectTodos = todos.filter(todo => todo.project === project);
 
-    function render(todos) {
-        // Filter for only todos due in upcoming week
-        let projectTodos = todos.filter(todo => todo.project === selectedProject);
-
-        // Render new todos list
-        renderPage("Next 7 Days", projectTodos);
-    }
-})();
+    // Render new todos list
+    renderPage(project, projectTodos);
+}
 
 
 // Renders project list in sidebar
@@ -200,18 +200,31 @@ const renderProjectList = (() => {
             title.textContent = project;
             submenu.appendChild(title);
 
+            submenu.addEventListener("click", () => {
+                events.off("todos changed", renderAllTasks);
+                events.off("todos changed", renderToday);
+                events.off("todos changed", renderWeek);
+                events.on("todos changed", renderProjectPage);
+
+                // Set global variable to be used in renderProjectPage
+                window.currentProjectPage = project;
+                
+                renderProjectPage(app.todos);
+            })
+
             projectContainer.appendChild(submenu);
         })
     }
 })();
 
 
-// Sidebar menu event listeners
+// Sidebar menu click functions
 const allTasksButton = document.querySelector("#allTasks");
 allTasksButton.addEventListener("click", () => {
     events.on("todos changed", renderAllTasks);
     events.off("todos changed", renderToday);
     events.off("todos changed", renderWeek);
+    events.off("todos changed", renderProjectPage);
     renderAllTasks(app.todos);
 })
 
@@ -220,6 +233,7 @@ todayButton.addEventListener("click", () => {
     events.off("todos changed", renderAllTasks);
     events.on("todos changed", renderToday);
     events.off("todos changed", renderWeek);
+    events.off("todos changed", renderProjectPage);
     renderToday(app.todos);
 })
 
@@ -228,6 +242,7 @@ next7DaysButton.addEventListener("click", () => {
     events.off("todos changed", renderAllTasks);
     events.off("todos changed", renderToday);
     events.on("todos changed", renderWeek);
+    events.off("todos changed", renderProjectPage);
     renderWeek(app.todos);
 })
 

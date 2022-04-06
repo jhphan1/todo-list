@@ -25,6 +25,7 @@ const app = (() => {
 
     // Pre-fill projects array
     projects[0] = "Personal";
+    projects[1] = "Work";
 
     events.emit("Projects changed", projects);
 
@@ -185,5 +186,6 @@ const app = (() => {
 
     return { todos, projects };
 })();
+
 
 export default app;
