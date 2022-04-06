@@ -128,18 +128,12 @@ function renderPage(pageTitle, todosArray) {
 
 // Renders all todos onto page
 const renderAllTasks = (todos) => {
-    console.log(events);
-    console.log("all taskssssss");
-
     renderPage("All Tasks", todos);
 };
 
 
 // Renders only todos due today
 const renderToday = (todos) => {
-    console.log(events);
-    console.log("todayyyy");
-
     // Set today's date and format with date-fns
     let today = format((new Date()), 'MM/dd/yy');
 
@@ -152,9 +146,6 @@ const renderToday = (todos) => {
 
 // Renders only todos due in upcoming week
 const renderWeek = (todos) => {
-    console.log(events);
-    console.log("weeeeeeeek");
-
     // Set start and stop dates for the week using date-fns
     let today = format((new Date()), 'MM/dd/yy');
     let oneWeekLater = format((add(new Date(), {days: 7})), 'MM/dd/yy');

@@ -125,8 +125,9 @@ const addTodoPopup = (() => {
         const body = document.querySelector("body");
         const addTodoPopup = document.querySelector(".todo-popup");
         const addTodoOverlay = document.querySelector("#overlay");
-        console.log(body.removeChild(addTodoPopup));
-        console.log(body.removeChild(addTodoOverlay));
+        if (!addTodoPopup) return events.off("todos changed", removeAddTodoPopup);
+        body.removeChild(addTodoPopup);
+        body.removeChild(addTodoOverlay);
     }
 })();
 
@@ -186,6 +187,7 @@ const addProjectPopup = (() => {
         const sidebar = document.querySelector("#sidebar");
         const addProjectPopup = document.querySelector("#add-project-popup");
         const overlay = document.querySelector("#overlay");
+        if (!addProjectPopup) return events.off("Projects changed", removeAddProjectPopup);
         sidebar.removeChild(addProjectPopup);
         sidebar.removeChild(overlay);
     }
@@ -335,6 +337,7 @@ const editTodoPopup = (() => {
         const body = document.querySelector("body");
         const editTodoPopup = document.querySelector(".todo-popup");
         const overlay = document.querySelector("#overlay");
+        if (!editTodoPopup) return events.off("todos changed", removeEditTodoPopup);
         console.log(body.removeChild(editTodoPopup));
         console.log(body.removeChild(overlay));
     }
