@@ -28,7 +28,6 @@ const addTodoPopup = (() => {
         const title = document.createElement("input");
         title.classList.add("input-todo-title");
         title.placeholder = "Add title";
-        title.autofocus = "true";
         content.appendChild(title);
 
         const description = document.createElement("textarea");
@@ -150,7 +149,6 @@ const addProjectPopup = (() => {
 
         const title = document.createElement("input");
         title.id = "add-project-title";
-        title.autofocus = "true";
         title.placeholder = "Add title";
         addProjectPopup.appendChild(title);
 
@@ -233,7 +231,6 @@ const editTodoPopup = (() => {
         const title = document.createElement("input");
         title.classList.add("input-todo-title");
         title.value = titlePlaceholder;
-        title.autofocus = true;
         content.appendChild(title);
 
         const description = document.createElement("textarea");

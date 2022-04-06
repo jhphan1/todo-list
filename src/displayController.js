@@ -3,6 +3,7 @@ import app from "./index";
 import { editTodoPopup } from "./popups";
 import { format, parseISO, parse, add } from 'date-fns';
 
+
 // Renders page using todos array sorted by due date
 function renderPage(pageTitle, todosArray) {
     const main = document.querySelector("#main");
@@ -124,51 +125,51 @@ function renderPage(pageTitle, todosArray) {
     })
 }
 
-// Renders all todos onto page
-const renderAllTasks = (() => {
-    // events.on("todos changed", render);
 
-    function render(todos) {
-        renderPage("All Tasks", todos);
-    }
-})();
+// Renders all todos onto page
+const renderAllTasks = (todos) => {
+    console.log(events);
+    console.log("all taskssssss");
+
+    renderPage("All Tasks", todos);
+};
+
 
 // Renders only todos due today
-const renderToday = (() => {
-    // events.on("todos changed", render);
+const renderToday = (todos) => {
+    console.log(events);
+    console.log("todayyyy");
 
     // Set today's date and format with date-fns
     let today = format((new Date()), 'MM/dd/yy');
 
-    function render(todos) {
-        // Filter for only todos due today
-        let todaysTodos = todos.filter(todo => todo.dueDate === today);
+    // Filter for only todos due today
+    let todaysTodos = todos.filter(todo => todo.dueDate === today);
+    
+    renderPage("Today", todaysTodos);
+};
 
-        // Render new todos list
-        renderPage("Today", todaysTodos);
-    }
-})();
 
 // Renders only todos due in upcoming week
-const renderWeek = (() => {
-    // events.on("todos changed", render);
+const renderWeek = (todos) => {
+    console.log(events);
+    console.log("weeeeeeeek");
 
     // Set start and stop dates for the week using date-fns
     let today = format((new Date()), 'MM/dd/yy');
     let oneWeekLater = format((add(new Date(), {days: 7})), 'MM/dd/yy');
 
-    function render(todos) {
-        // Filter for only todos due in upcoming week
-        let oneWeeksTodos = todos.filter(todo => todo.dueDate >= today && todo.dueDate <= oneWeekLater);
+    // Filter for only todos due in upcoming week
+    let oneWeeksTodos = todos.filter(todo => todo.dueDate >= today && todo.dueDate <= oneWeekLater);
 
-        // Render new todos list
-        renderPage("Next 7 Days", oneWeeksTodos);
-    }
-})();
+    // Render new todos list
+    renderPage("Next 7 Days", oneWeeksTodos);
+};
+
 
 // Renders only todos belonging to a specific project
 const renderSpecificProject = (() => {
-    events.on("todos changed", render);
+    // events.on("todos changed", render);
 
     let selectedProject = "Personal"; // changes based on DOM interaction
 
@@ -180,6 +181,7 @@ const renderSpecificProject = (() => {
         renderPage("Next 7 Days", projectTodos);
     }
 })();
+
 
 // Renders project list in sidebar
 const renderProjectList = (() => {
@@ -211,5 +213,32 @@ const renderProjectList = (() => {
         })
     }
 })();
+
+
+// Sidebar menu event listeners
+const allTasksButton = document.querySelector("#allTasks");
+allTasksButton.addEventListener("click", () => {
+    events.on("todos changed", renderAllTasks);
+    events.off("todos changed", renderToday);
+    events.off("todos changed", renderWeek);
+    renderAllTasks(app.todos);
+})
+
+const todayButton = document.querySelector("#today");
+todayButton.addEventListener("click", () => {
+    events.off("todos changed", renderAllTasks);
+    events.on("todos changed", renderToday);
+    events.off("todos changed", renderWeek);
+    renderToday(app.todos);
+})
+
+const next7DaysButton = document.querySelector("#next7Days");
+next7DaysButton.addEventListener("click", () => {
+    events.off("todos changed", renderAllTasks);
+    events.off("todos changed", renderToday);
+    events.on("todos changed", renderWeek);
+    renderWeek(app.todos);
+})
+
 
 export { renderAllTasks, renderProjectList };
