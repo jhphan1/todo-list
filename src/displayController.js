@@ -174,6 +174,14 @@ const renderProjectPage = (todos) => {
 
     // Render new todos list
     renderPage(project, projectTodos);
+
+    // Add Delete Project element
+    const title = document.querySelector(".title");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "X";
+    deleteButton.id = "projectDeleteButton";
+    deleteButton.addEventListener("click", () => console.log("delete!"));
+    title.appendChild(deleteButton);
 }
 
 
