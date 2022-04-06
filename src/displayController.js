@@ -131,6 +131,9 @@ const renderAllTasks = (todos) => {
     renderPage("All Tasks", todos);
 };
 
+// On initial page load, the default view is All Tasks
+events.on("todos changed", renderAllTasks);
+
 
 // Renders only todos due today
 const renderToday = (todos) => {
