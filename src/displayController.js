@@ -136,7 +136,7 @@ const renderAllTasks = (() => {
 // Renders only todos due today
 const renderToday = (() => {
     // events.on("todos changed", render);
-    
+
     // Set today's date and format with date-fns
     let today = format((new Date()), 'MM/dd/yy');
 
@@ -151,7 +151,7 @@ const renderToday = (() => {
 
 // Renders only todos due in upcoming week
 const renderWeek = (() => {
-    events.on("todos changed", render);
+    // events.on("todos changed", render);
 
     // Set start and stop dates for the week using date-fns
     let today = format((new Date()), 'MM/dd/yy');
@@ -166,6 +166,22 @@ const renderWeek = (() => {
     }
 })();
 
+// Renders only todos belonging to a specific project
+const renderSpecificProject = (() => {
+    events.on("todos changed", render);
+
+    let selectedProject = "Personal"; // changes based on DOM interaction
+
+    function render(todos) {
+        // Filter for only todos due in upcoming week
+        let projectTodos = todos.filter(todo => todo.project === selectedProject);
+
+        // Render new todos list
+        renderPage("Next 7 Days", projectTodos);
+    }
+})();
+
+// Renders project list in sidebar
 const renderProjectList = (() => {
     const projectContainer = document.querySelector("#project-container");
 

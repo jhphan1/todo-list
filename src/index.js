@@ -16,8 +16,8 @@ const app = (() => {
     }
 
     // Pre-fill todos array
-    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "03/31/22", "Personal", "medium");
-    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/04/22", "Personal", "normal");
+    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "04/12/22", "Personal", "medium");
+    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/06/22", "Personal", "normal");
     const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "04/31/22", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
