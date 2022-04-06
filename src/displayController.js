@@ -1,6 +1,6 @@
 import events from "./pubsub";
 import app from "./index";
-import { editTodoPopup } from "./popups";
+import { editTodoPopup, deleteProjectPopup } from "./popups";
 import { format, parseISO, parse, add } from 'date-fns';
 
 
@@ -180,7 +180,10 @@ const renderProjectPage = (todos) => {
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "X";
     deleteButton.id = "projectDeleteButton";
-    deleteButton.addEventListener("click", () => console.log("delete!"));
+    deleteButton.addEventListener("click", (e) => {
+        let targetProject = (e.target.parentNode.textContent).slice(0, -1) // Remove last char which is "X" button
+        deleteProjectPopup.displayDeleteProject(targetProject);
+    });
     title.appendChild(deleteButton);
 }
 

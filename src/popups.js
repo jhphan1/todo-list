@@ -131,6 +131,7 @@ const addTodoPopup = (() => {
     }
 })();
 
+
 const addProjectPopup = (() => {
     const addProjectButton = document.querySelector("#add-project-button");
     addProjectButton.addEventListener("click", displayAddProject);
@@ -192,6 +193,7 @@ const addProjectPopup = (() => {
         sidebar.removeChild(overlay);
     }
 })();
+
 
 const editTodoPopup = (() => {
     function displayEditTodo(e) {
@@ -338,11 +340,72 @@ const editTodoPopup = (() => {
         const editTodoPopup = document.querySelector(".todo-popup");
         const overlay = document.querySelector("#overlay");
         if (!editTodoPopup) return events.off("todos changed", removeEditTodoPopup);
-        console.log(body.removeChild(editTodoPopup));
-        console.log(body.removeChild(overlay));
+        body.removeChild(editTodoPopup);
+        body.removeChild(overlay);
     }
 
     return { displayEditTodo };
 })();
 
-export { editTodoPopup };
+
+const deleteProjectPopup = (() => {
+    function displayDeleteProject(targetProject) {
+        const body = document.querySelector("body");
+
+        const deleteProjectPopup = document.createElement("div");
+        deleteProjectPopup.id = "delete-project-popup";
+        body.appendChild(deleteProjectPopup);
+
+        const header = document.createElement("div");
+        header.id = "delete-project-header";
+        header.textContent = "Delete Project"
+        deleteProjectPopup.appendChild(header);
+
+        const confirm = document.createElement("div");
+        confirm.id = "delete-project-confirm";
+        confirm.textContent = `Are you sure you want to delete ${targetProject}? This project and all of its associated tasks will be deleted.`
+        deleteProjectPopup.appendChild(confirm);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.id = "add-project-button-container";
+        deleteProjectPopup.appendChild(buttonContainer);
+
+        const deleter = document.createElement("button");
+        deleter.id = "delete-project-button";
+        deleter.textContent = "Delete";
+        buttonContainer.appendChild(deleter);
+
+        // Send user input to app for error checking
+        deleter.addEventListener("click", () => {
+            events.emit("User deletes project", targetProject);
+        })
+
+        const cancel = document.createElement("button");
+        cancel.id = "delete-project-cancel";
+        cancel.textContent = "Cancel";
+        buttonContainer.appendChild(cancel);
+
+        // Create transparent overlay behind popup
+        const overlay = document.createElement("div");
+        overlay.id = "overlay";
+        body.appendChild(overlay);
+
+        // Ways to close popup
+        cancel.addEventListener("click", removeDeleteProjectPopup);
+        overlay.addEventListener("click", removeDeleteProjectPopup);
+        events.on("Projects changed", removeDeleteProjectPopup);
+    }
+
+    function removeDeleteProjectPopup() {
+        const body = document.querySelector("body");
+        const deleteProjectPopup = document.querySelector("#delete-project-popup");
+        const overlay = document.querySelector("#overlay");
+        if (!deleteProjectPopup) return events.off("Projects changed", removeDeleteProjectPopup);
+        body.removeChild(deleteProjectPopup);
+        body.removeChild(overlay);
+    }
+
+    return { displayDeleteProject };
+})();
+
+export { editTodoPopup, deleteProjectPopup };
