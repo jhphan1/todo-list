@@ -83,8 +83,8 @@ const app = (() => {
 
         // Create new todo object and add to array
         const aTodo = todoFactory(title, description, date, project, priority);
-        todos.push(aTodo);
-        events.emit("todos changed", todos);
+        app.todos.push(aTodo);
+        events.emit("todos changed", app.todos);
     }
 
     function addProject(userInput) {
@@ -146,7 +146,7 @@ const app = (() => {
         }
 
         // Edit todo object
-        todos.forEach(todo => {
+        app.todos.forEach(todo => {
             if (todo.title === targetTodo) {
                 todo.title = title;
                 todo.description = description;
@@ -156,7 +156,7 @@ const app = (() => {
             }
         })
     
-        events.emit("todos changed", todos);
+        events.emit("todos changed", app.todos);
     }
 
     function deleteTodo(targetObject) {
@@ -166,23 +166,23 @@ const app = (() => {
     }
 
     function completeTodo(targetObject) {
-        todos.forEach(todo => {
+        app.todos.forEach(todo => {
             if (todo.title === targetObject) {
                 todo.completed = true;
             }
         });
 
-        events.emit("todos changed", todos);
+        events.emit("todos changed", app.todos);
     }
 
     function uncompleteTodo(targetObject) {
-        todos.forEach(todo => {
+        app.todos.forEach(todo => {
             if (todo.title === targetObject) {
                 todo.completed = false;
             }
         });
 
-        events.emit("todos changed", todos);
+        events.emit("todos changed", app.todos);
     }
 
     function deleteProject(targetProject) {
@@ -190,10 +190,10 @@ const app = (() => {
         app.todos = app.todos.filter(todo => todo.project !== targetProject);
 
         // Delete project
-        projects.splice(projects.indexOf(targetProject), 1);
+        app.projects.splice(app.projects.indexOf(targetProject), 1);
         
         events.emit("todos changed", app.todos);
-        events.emit("Projects changed", projects);
+        events.emit("Projects changed", app.projects);
     }
 
     return { todos, projects };
