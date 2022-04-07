@@ -393,7 +393,10 @@ const deleteProjectPopup = (() => {
         // Ways to close popup
         cancel.addEventListener("click", removeDeleteProjectPopup);
         overlay.addEventListener("click", removeDeleteProjectPopup);
-        events.on("Projects changed", removeDeleteProjectPopup);
+        events.on("Projects changed", () => {
+            removeDeleteProjectPopup();
+            renderAllTasks(app.todos); // Return to home page if successfully deleted
+        })
     }
 
     function removeDeleteProjectPopup() {
