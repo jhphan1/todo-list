@@ -45,6 +45,7 @@ const addTodoPopup = (() => {
         const date = document.createElement("input");
         date.type = "date";
         date.id = "todo-date";
+        date.value = format((new Date()), 'yyyy-MM-dd'); // Placeholder is today's date
         content.appendChild(date);
 
         const projectLabel = document.createElement("label");
@@ -396,7 +397,7 @@ const deleteProjectPopup = (() => {
         events.on("Projects changed", () => {
             removeDeleteProjectPopup();
             events.off("todos changed", renderProjectPage);
-            
+
             renderAllTasks(app.todos); // Return to home page if successfully deleted
             events.on("todos changed", renderAllTasks);
         })
