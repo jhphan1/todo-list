@@ -367,7 +367,7 @@ const deleteProjectPopup = (() => {
         deleteProjectPopup.appendChild(confirm);
 
         const buttonContainer = document.createElement("div");
-        buttonContainer.id = "add-project-button-container";
+        buttonContainer.id = "delete-project-button-container";
         deleteProjectPopup.appendChild(buttonContainer);
 
         const deleter = document.createElement("button");

@@ -36,6 +36,7 @@ const app = (() => {
     events.on("User deletes todo", deleteTodo);
     events.on("User completes todo", completeTodo);
     events.on("User un-completes todo", uncompleteTodo);
+    events.on("User deletes project", deleteProject);
 
     function addTodo(userInput) {
         let title;
@@ -182,6 +183,17 @@ const app = (() => {
         });
 
         events.emit("todos changed", todos);
+    }
+
+    function deleteProject(targetProject) {
+        // Delete all todos in project
+        app.todos = app.todos.filter(todo => todo.project !== targetProject);
+
+        // Delete project
+        projects.splice(projects.indexOf(targetProject), 1);
+        
+        events.emit("todos changed", app.todos);
+        events.emit("Projects changed", projects);
     }
 
     return { todos, projects };
