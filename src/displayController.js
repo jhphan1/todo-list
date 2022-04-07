@@ -175,16 +175,18 @@ const renderProjectPage = (todos) => {
     // Render new todos list
     renderPage(project, projectTodos);
 
-    // Add Delete Project element
-    const title = document.querySelector(".title");
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "X";
-    deleteButton.id = "projectDeleteButton";
-    deleteButton.addEventListener("click", (e) => {
-        let targetProject = (e.target.parentNode.textContent).slice(0, -1) // Remove last char which is "X" button
-        deleteProjectPopup.displayDeleteProject(targetProject);
-    });
+    // Add Delete Project element. General project page is excluded since it cannot be deleted.
+    if (project !== "General") {
+        const title = document.querySelector(".title");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "X";
+        deleteButton.id = "projectDeleteButton";
+        deleteButton.addEventListener("click", (e) => {
+            let targetProject = (e.target.parentNode.textContent).slice(0, -1) // Remove last char which is "X" button
+            deleteProjectPopup.displayDeleteProject(targetProject); // Opens delete confirmation popup
+        });
     title.appendChild(deleteButton);
+    } 
 }
 
 
