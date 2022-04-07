@@ -9,6 +9,17 @@ const app = (() => {
     let todos = [];
     let projects = [];
 
+    // Get todos and projects arrays from local storage API if available
+    if (localStorage.getItem("todos")) {
+        todos = JSON.parse(localStorage.getItem("todos"));
+        events.emit("todos changed", todos);
+    }
+
+    if (localStorage.getItem("projects")) {
+        projects = JSON.parse(localStorage.getItem("projects"));
+        events.emit("Projects changed", projects);
+    }
+
     // todo factory function
     function todoFactory(title, description, dueDate, project, priority) {
         let completed = false;
@@ -16,20 +27,21 @@ const app = (() => {
     }
 
     // Pre-fill todos array
-    const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "04/12/22", "General", "medium");
-    const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/06/22", "General", "normal");
-    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "04/30/22", "Work", "high");
-    todos.push(todo1, todo2, todo3);
+    // const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "04/12/22", "General", "medium");
+    // const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/06/22", "General", "normal");
+    // const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "04/30/22", "Work", "high");
+    // todos.push(todo1, todo2, todo3);
 
-    events.emit("todos changed", todos);
+    // events.emit("todos changed", todos);
 
-    // Pre-fill projects array
+    // Pre-fill projects array with default project
     projects[0] = "General";
-    projects[1] = "Work";
 
     events.emit("Projects changed", projects);
 
     // Subscribe to user input events
+    events.on("todos changed", storeTodos);
+    events.on("Projects changed", storeProjects);
     events.on("User inputs new todo", addTodo);
     events.on("User inputs new project", addProject);
     events.on("User edits todo", editTodo);
@@ -37,6 +49,16 @@ const app = (() => {
     events.on("User completes todo", completeTodo);
     events.on("User un-completes todo", uncompleteTodo);
     events.on("User deletes project", deleteProject);
+
+    // Store changes to todos on local computer with localStorage API
+    function storeTodos(todos) {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    // Store changes to projects on local computer with localStorage API
+    function storeProjects(projects) {
+        localStorage.setItem("projects", JSON.stringify(projects));
+    }
 
     function addTodo(userInput) {
         let title;
