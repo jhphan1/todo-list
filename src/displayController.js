@@ -222,6 +222,8 @@ const renderProjectList = (() => {
                 events.off("todos changed", renderWeek);
                 events.on("todos changed", renderProjectPage);
 
+                boldMe(submenu);
+
                 // Set global variable to be used in renderProjectPage
                 window.currentProjectPage = project;
                 
@@ -242,6 +244,8 @@ allTasksButton.addEventListener("click", () => {
     events.off("todos changed", renderWeek);
     events.off("todos changed", renderProjectPage);
     renderAllTasks(app.todos);
+
+    boldMe(allTasksButton);
 })
 
 const todayButton = document.querySelector("#today");
@@ -251,6 +255,8 @@ todayButton.addEventListener("click", () => {
     events.off("todos changed", renderWeek);
     events.off("todos changed", renderProjectPage);
     renderToday(app.todos);
+
+    boldMe(todayButton);
 })
 
 const next7DaysButton = document.querySelector("#next7Days");
@@ -260,7 +266,23 @@ next7DaysButton.addEventListener("click", () => {
     events.on("todos changed", renderWeek);
     events.off("todos changed", renderProjectPage);
     renderWeek(app.todos);
+
+    boldMe(next7DaysButton);
 })
+
+
+function boldMe(menuItem) {
+    // Unbold all other items
+    let elements = document.getElementsByClassName("bold"); // Returns HTML list
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].classList.remove("bold");
+    }
+
+    // Bold target menu item
+    menuItem.classList.add("bold");
+}
+
+boldMe(allTasksButton); // Bolds allTasks on initial page load
 
 
 export { renderAllTasks, renderProjectList, renderProjectPage };

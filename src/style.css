@@ -416,3 +416,7 @@ body {
 #delete-project-popup #delete-project-button {
     background-color:rgb(252, 86, 86);
 }
+
+.bold {
+    font-weight: bold;
+}

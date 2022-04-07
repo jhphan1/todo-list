@@ -396,6 +396,7 @@ const deleteProjectPopup = (() => {
         overlay.addEventListener("click", removeDeleteProjectPopup);
         events.on("Projects changed", () => {
             removeDeleteProjectPopup();
+            console.log("Should have removed deleteProjectPopup by now");
             events.off("todos changed", renderProjectPage);
 
             renderAllTasks(app.todos); // Return to home page if successfully deleted

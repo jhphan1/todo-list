@@ -190,10 +190,12 @@ const app = (() => {
         app.todos = app.todos.filter(todo => todo.project !== targetProject);
 
         // Delete project
-        app.projects.splice(app.projects.indexOf(targetProject), 1);
+        app.projects = app.projects.filter(project => project !== targetProject);
+        // app.projects.splice(app.projects.indexOf(targetProject), 1);
+        console.log("deleted: " + targetProject);
         
-        events.emit("todos changed", app.todos);
         events.emit("Projects changed", app.projects);
+        events.emit("todos changed", app.todos);
     }
 
     return { todos, projects };
