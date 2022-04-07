@@ -160,9 +160,9 @@ const app = (() => {
     }
 
     function deleteTodo(targetObject) {
-        todos = todos.filter(todo => todo.title !== targetObject);
+        app.todos = app.todos.filter(todo => todo.title !== targetObject);
 
-        events.emit("todos changed", todos);
+        events.emit("todos changed", app.todos);
     }
 
     function completeTodo(targetObject) {
