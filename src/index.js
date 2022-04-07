@@ -18,7 +18,7 @@ const app = (() => {
     // Pre-fill todos array
     const todo1 = todoFactory("Haircut at 9", "Haircut at 9 at Great Clips with Aaron as your barber", "04/12/22", "General", "medium");
     const todo2 = todoFactory("Shop for paint", "Go to Sherwin Williams next to barber and pick out sample colors for guest bedroom", "04/06/22", "General", "normal");
-    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "04/31/22", "Work", "high");
+    const todo3 = todoFactory("Send work schedule", "Email Bob my work schedule for next month", "04/30/22", "Work", "high");
     todos.push(todo1, todo2, todo3);
 
     events.emit("todos changed", todos);
@@ -90,13 +90,13 @@ const app = (() => {
     function addProject(userInput) {
         if (!userInput) {
             return alert("Please add title.");
-        } else if (projects.find(project => project === userInput)) {
+        } else if (app.projects.find(project => project === userInput)) {
             return alert("That title already exists.");
         } else if (userInput.length > 20) {
             return alert("Project title cannot exceed 12 characters.");
         } else {
-            projects.push(userInput);
-            events.emit("Projects changed", projects);
+            app.projects.push(userInput);
+            events.emit("Projects changed", app.projects);
         }
     }
 
@@ -192,7 +192,6 @@ const app = (() => {
         // Delete project
         app.projects = app.projects.filter(project => project !== targetProject);
         // app.projects.splice(app.projects.indexOf(targetProject), 1);
-        console.log("deleted: " + targetProject);
         
         events.emit("Projects changed", app.projects);
         events.emit("todos changed", app.todos);

@@ -285,4 +285,4 @@ function boldMe(menuItem) {
 boldMe(allTasksButton); // Bolds allTasks on initial page load
 
 
-export { renderAllTasks, renderProjectList, renderProjectPage };
+export { renderAllTasks, renderProjectList, renderProjectPage, boldMe };

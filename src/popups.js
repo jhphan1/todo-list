@@ -1,6 +1,6 @@
 import events from "./pubsub";
 import app from "./index";
-import { renderAllTasks, renderProjectPage, renderProjectList } from './displayController';
+import { renderAllTasks, renderProjectPage, renderProjectList, boldMe } from './displayController';
 import { format, parseISO, parse } from 'date-fns';
 
 
@@ -189,9 +189,9 @@ const addProjectPopup = (() => {
         const sidebar = document.querySelector("#sidebar");
         const addProjectPopup = document.querySelector("#add-project-popup");
         const overlay = document.querySelector("#overlay");
-        if (!addProjectPopup) return events.off("Projects changed", removeAddProjectPopup);
         sidebar.removeChild(addProjectPopup);
         sidebar.removeChild(overlay);
+        events.off("Projects changed", removeAddProjectPopup);
     }
 })();
 
@@ -394,23 +394,26 @@ const deleteProjectPopup = (() => {
         // Ways to close popup
         cancel.addEventListener("click", removeDeleteProjectPopup);
         overlay.addEventListener("click", removeDeleteProjectPopup);
-        events.on("Projects changed", () => {
-            removeDeleteProjectPopup();
-            console.log("Should have removed deleteProjectPopup by now");
-            events.off("todos changed", renderProjectPage);
-
-            renderAllTasks(app.todos); // Return to home page if successfully deleted
-            events.on("todos changed", renderAllTasks);
-        })
+        events.on("Projects changed", deleteProjectDOMHandler);
     }
 
     function removeDeleteProjectPopup() {
         const body = document.querySelector("body");
         const deleteProjectPopup = document.querySelector("#delete-project-popup");
         const overlay = document.querySelector("#overlay");
-        if (!deleteProjectPopup) return events.off("Projects changed", removeDeleteProjectPopup);
         body.removeChild(deleteProjectPopup);
         body.removeChild(overlay);
+    }
+
+    function deleteProjectDOMHandler() {
+        removeDeleteProjectPopup();
+        events.off("todos changed", renderProjectPage);
+
+        renderAllTasks(app.todos); // Return to home page if successfully deleted
+        events.on("todos changed", renderAllTasks);
+        boldMe(document.querySelector("#allTasks"));
+        
+        events.off("Projects changed", deleteProjectDOMHandler);
     }
 
     return { displayDeleteProject };
