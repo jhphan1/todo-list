@@ -1,6 +1,6 @@
 import events from "./pubsub";
 import app from "./index";
-import { renderAllTasks, renderProjectList } from './displayController';
+import { renderAllTasks, renderProjectPage, renderProjectList } from './displayController';
 import { format, parseISO, parse } from 'date-fns';
 
 
@@ -395,7 +395,10 @@ const deleteProjectPopup = (() => {
         overlay.addEventListener("click", removeDeleteProjectPopup);
         events.on("Projects changed", () => {
             removeDeleteProjectPopup();
+            events.off("todos changed", renderProjectPage);
+            
             renderAllTasks(app.todos); // Return to home page if successfully deleted
+            events.on("todos changed", renderAllTasks);
         })
     }
 

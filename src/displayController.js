@@ -263,4 +263,4 @@ next7DaysButton.addEventListener("click", () => {
 })
 
 
-export { renderAllTasks, renderProjectList };
+export { renderAllTasks, renderProjectList, renderProjectPage };
