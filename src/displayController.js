@@ -2,6 +2,24 @@ import events from "./pubsub";
 import app from "./index";
 import { editTodoPopup, deleteProjectPopup } from "./popups";
 import { format, parseISO, parse, add } from 'date-fns';
+import Logo from "./img/logo.png";
+import Home from "./img/home1.png";
+
+// MOVE INTO ITS OWN JS FILEEEEEEEE
+// // Add images
+//     // Header logo
+// const logo = document.querySelector("#logo");
+
+// const myLogo = new Image();
+// myLogo.src = Logo;
+
+// logo.appendChild(myLogo);
+//     // All tasks
+// function insertAfter(newNode, existingNode) {
+//     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+// }    
+
+// const 
 
 
 // Renders page using todos array sorted by due date

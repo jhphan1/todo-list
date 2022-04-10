@@ -3,6 +3,7 @@ import events from "./pubsub";
 import { renderAllTasks, renderProjectList } from './displayController';
 import { editTodoPopup } from './popups';
 import { format, parseISO } from 'date-fns';
+import { loadImages } from "./imageLoader";
 
 
 const app = (() => {

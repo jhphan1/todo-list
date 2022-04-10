@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jhphan1/todo-list#readme",
   "dependencies": {
-    "date-fns": "^2.28.0"
+    "date-fns": "^2.28.0",
+    "html-loader": "^3.1.0"
   }
 }
